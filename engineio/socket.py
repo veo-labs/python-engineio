@@ -39,7 +39,7 @@ class Socket(object):
         """Receive packet from the client."""
         self.server.logger.info('%s: Received packet %s with %s', self.sid,
                                 packet.packet_names[pkt.packet_type],
-                                pkt.data)
+                                repr(pkt.data)[:500])
         if pkt.packet_type == packet.PING:
             self.last_ping = time.time()
             self.send(packet.Packet(packet.PONG, pkt.data))
@@ -62,7 +62,7 @@ class Socket(object):
         self.queue.put(pkt)
         self.server.logger.info('%s: Sending packet %s with %s', self.sid,
                                 packet.packet_names[pkt.packet_type],
-                                pkt.data)
+                                repr(pkt.data)[:500])
 
     def handle_get_request(self, environ, start_response):
         """Handle a long-polling GET request from the client."""
